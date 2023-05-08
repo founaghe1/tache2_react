@@ -1,13 +1,20 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import {Fruit} from './Fruit'
-import { useState } from 'react';
+import { useState, createContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { Task } from './Task';
 import { Text } from './Text';
 import Axios  from 'axios';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Home } from './pages/Home';
+import { Menu } from './pages/Menu';
+import { Contact } from './pages/Contact';
+import {Navbar} from './pages/Navbar'
+import { ChangeProfile } from './Components/ChangeProfile';
 
 
+export const AppContext = createContext();
 
 function App() {
   const ecole = "Bakeliste";
@@ -154,6 +161,11 @@ function App() {
     })
 
   }
+
+
+  {/* Module 9: State Management */}
+
+  const [username, setUsername] = useState("@userName");
   
   
 
@@ -308,11 +320,30 @@ function App() {
       </div>
 
 
+        
+
+        <div className='mt-5'>
+          <h4>Module 8 : Les Routes avec reactJs:</h4>
+          <AppContext.Provider value={{username, setUsername}}>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/changeProfile" element={<ChangeProfile />} />
+              <Route path='*' element={<h1> ERROR 404 Page not found  </h1>} />
+            </Routes>
+          </Router>
+          </AppContext.Provider>
+        </div>
       
       
     </div>
   );
 }
+
+
 
 
 
@@ -336,6 +367,10 @@ const User = (props) =>{
   
 }
 
+
+
+
+
 export default App;
 
-// 2h 57mn
+

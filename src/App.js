@@ -323,7 +323,7 @@ function App() {
         
 
         <div className='mt-5'>
-          <h4>Module 8 : Les Routes avec reactJs:</h4>
+          <h4>Module 8 et 9: Les Routes avec reactJs / useContext Hook et state Management:</h4>
           <AppContext.Provider value={{username, setUsername}}>
           <Router>
             <Navbar />

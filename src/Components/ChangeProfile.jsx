@@ -10,7 +10,7 @@ export const ChangeProfile = () =>{
     const [newUsername, setNewUsername] = useState("")
     return(
         <div className="bg-warning  mx-5">
-            {/* <h1 className="text-light">This is the Change Profile Page</h1> */}
+             <h5 className="text-light">In this page you can change your username</h5> 
             <input  type="text" onChange={(event) => {setNewUsername(event.target.value)}} placeholder="username..." />
             <Link to='/'>
                 <Button onClick={() => {

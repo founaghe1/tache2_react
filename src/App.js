@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import {Fruit} from './Fruit'
 import { useState, createContext } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { Task } from './Task';
 import { Text } from './Text';
 import Axios  from 'axios';
@@ -12,6 +12,10 @@ import { Menu } from './pages/Menu';
 import { Contact } from './pages/Contact';
 import {Navbar} from './pages/Navbar'
 import { ChangeProfile } from './Components/ChangeProfile';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 
 export const AppContext = createContext();
@@ -166,8 +170,29 @@ function App() {
   {/* Module 9: State Management */}
 
   const [username, setUsername] = useState("@userName");
+
+  // Module 10 : React Query
+
+  const client = new QueryClient();
+
+  // Module 11 : Validation formulair
+
   
+  const schema = yup.object().shape({
+    fullName: yup.string().required("Le nom est obligatoir"),
+    email: yup.string().email().required("Entrez un eamil correct"),
+    age: yup.number().positive().integer().min(18).required("L'age doit etre positive entier et supperiieur a 18 ans"),
+    password: yup.string().min(4).max(20).required("le mot de passe dois etre entre 4 et 20 caracteres"),
+    confirmPassword: yup.string().oneOf([yup.ref("password"), null], "Les mots de passe ne correspondent pas").required("Confirmez votre mot de passe"),
+  });
+
+  const {register, handleSubmit, formState:{errors}} = useForm({
+    resolver: yupResolver(schema),
+  }); 
   
+  const onSubmit = (data) =>{
+    console.log(data);
+  }
 
   return (
     <div className="App">
@@ -324,6 +349,8 @@ function App() {
 
         <div className='mt-5'>
           <h4>Module 8 et 9: Les Routes avec reactJs / useContext Hook et state Management:</h4>
+
+          
           <AppContext.Provider value={{username, setUsername}}>
           <Router>
             <Navbar />
@@ -336,6 +363,27 @@ function App() {
             </Routes>
           </Router>
           </AppContext.Provider>
+          
+        </div>
+
+        {/*Module 11: React-Hook-Form and YUP */}
+
+        <div className='my-5 d-flex flex-column formulair align-items-center'>
+          <h4 className='text-light'>Module 11: React-Hook-Form and YUP</h4>
+          <Form className='d-flex flex-column w-50' onSubmit={handleSubmit(onSubmit)}>
+            <input type='text' placeholder='Full Name' className='rounded-3 border-0 py-1 input1 ps-2' {...register('fullName')} /> 
+            <p className='errors'>{errors.fullName?.message}</p>
+            <input type='text' placeholder='Email' className='rounded-3 border-0  py-1 input1 ps-2' {...register('email')} />
+            <p className='errors'>{errors.email?.message}</p>
+            <input type='number' placeholder='Age' className='rounded-3 border-0  py-1 input1 ps-2' {...register('age')} />
+            <p className='errors'>{errors.age?.message}</p>
+            <input type='password' placeholder='Password' className='rounded-3 border-0  py-1 input1 ps-2' {...register('password')} />
+            <p className='errors'>{errors.password?.message}</p>
+            <input type='password' placeholder='Confirm Password' className='rounded-3 border-0 py-1 input1 ps-2' {...register('confirmPassword')} />
+            <p className='errors'>{errors.confirmPassword?.message}</p>
+            <button type='submit' className='w-50 decrem'>Submit</button>
+          </Form>
+          
         </div>
       
       

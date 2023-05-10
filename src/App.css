@@ -140,3 +140,18 @@
 .btnTache button{
   margin-left: 7px;
 }
+
+.formulair{
+  background-color: #152951;
+  border-radius: 15px;
+  padding: 20px 0;
+  margin: 0 20px;
+}
+.errors{
+  color: red;
+  font-size: small;
+}
+.input1:focus{
+  outline: none;
+  background-color: #129e24b1;
+}

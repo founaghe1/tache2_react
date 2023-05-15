@@ -16,6 +16,15 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useToggle } from './useToggle';
+import { Person } from './Person';
+import { Homes } from './reduxToolkit/Homes';
+import { Logins } from './reduxToolkit/Logins'; 
+import { Contacts } from './reduxToolkit/Contacts';
+import { Navbars } from './reduxToolkit/Navbars';
+import { Provider } from 'react-redux';
+import { store } from './store.ts';
+
 
 
 export const AppContext = createContext();
@@ -193,6 +202,19 @@ function App() {
   const onSubmit = (data) =>{
     console.log(data);
   }
+
+  // //Module 12 : Costum Hooks
+  // const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, toggle] = useToggle();
+  const [isVisible2, toggle2] = useToggle()
+
+ 
+
+
+
+
+
+
 
   return (
     <div className="App">
@@ -383,6 +405,51 @@ function App() {
             <p className='errors'>{errors.confirmPassword?.message}</p>
             <button type='submit' className='w-50 decrem'>Submit</button>
           </Form>
+          
+        </div>
+
+        {/*Module 12 : Custum Hooks */}
+
+        <div>
+          <h4>Module 12: Custum Hooks</h4>
+          <Button onClick={toggle}>
+            {isVisible ? "Hide" : "Show"}
+          </Button>
+          {isVisible && <h4>Hiden text</h4>}
+
+        {/* Essai 2 */}
+        <p>
+          <Button onClick={toggle2}>
+            {isVisible2 ? "Hide2" : "Show2"}
+          </Button>
+          {isVisible2 && <h4>Hiden text 2</h4>}
+        </p>
+        </div>  
+
+        {/* Module 13 : TypeScript */}
+        <div className='mt-5'>
+          <h2>Module 13: PropTypes</h2>
+          <Person name="Mohamed" email="moha@gmail.com" age={21} isMarried={true}
+          friends={["baba", "makha", "mama", 'loume', 'yacine', "bachir"]} />
+        </div>
+
+        {/* Module 14 : Redux Toolkit */}
+        <div className='mt-5'>
+          <h4>Module 14: Redux et Toolkit</h4>
+
+          
+          
+          <Provider store={store}>  
+          <Router>
+            <Navbars />
+            <Routes>
+              <Route path="/" element={<Homes />} />
+              <Route path="/login" element={<Logins />} />
+              <Route path="/contacts" element={<Contacts />} />
+              <Route path='*' element={<h1> ERROR 404 Page not found  </h1>} />
+            </Routes>
+          </Router>
+          </Provider>
           
         </div>
       

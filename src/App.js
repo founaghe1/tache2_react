@@ -24,6 +24,7 @@ import { Contacts } from './reduxToolkit/Contacts';
 import { Navbars } from './reduxToolkit/Navbars';
 import { Provider } from 'react-redux';
 import { store } from './store.ts';
+import NotFoundPage from './pages/NotFoundPage';
 
 
 
@@ -381,7 +382,7 @@ function App() {
               <Route path="/menu" element={<Menu />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/changeProfile" element={<ChangeProfile />} />
-              <Route path='*' element={<h1> ERROR 404 Page not found  </h1>} />
+              <Route path='*' element={<NotFoundPage />} />
             </Routes>
           </Router>
           </AppContext.Provider>
